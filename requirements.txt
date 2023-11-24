@@ -2,3 +2,4 @@ requests
 scikit-learn
 pandas
 matplotlib
+seaborn
