@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 
-def get_dpe(size=float'inf'):
+def get_dpe(size=float('inf')):
 
     batch_size = 10000
     offset = 0
