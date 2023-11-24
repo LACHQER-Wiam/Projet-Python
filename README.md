@@ -14,7 +14,6 @@ Ce projet Python a été créé dans le but de fournir des visualisations varié
 
 Ce dépôt contient plusieurs dossiers et fichiers : 
 - le dossier `...` contient le code principal. 
-- le dossier '...' contient des jeux de données
 - le dossier 'tests' contient les tests unitaires
   
 ### Source des données : https://www.data.gouv.fr/fr/datasets/dpe-logements-existants-depuis-juillet-2021/
