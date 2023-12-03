@@ -1,16 +1,27 @@
 import requests
 import pandas as pd
+from urllib.parse import quote
 
-def get_dpe(size=float('inf')):
+def get_dpe(var, size=float('inf')):
+    """
+    Function aims to generate a data Frame from the extraction of data from the Ademe API
+    it takes as variable input the list of desired variables is the size of the sample. 
+    Args : 
+        var (list) -> list of variables names
+        size (int) -> size of the sample
+    """
 
     batch_size = 10000
     offset = 0
     data_frames = []
     total_fetched = 0
+    list_variables = var
 
-    def get_dpe_batch(offset, batch_size):
+    def get_dpe_batch(offset, batch_size, list_variables):
         api_root = "https://koumoul.com/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines"
-        url_api = f"{api_root}?offset={offset}&size={batch_size}&select=Etiquette_DPE%2CType_b%C3%A2timent%2CP%C3%A9riode_construction%2CHauteur_sous-plafond%2CSurface_habitable_logement%2CCode_postal_(brut)%2CType_%C3%A9nergie_n%C2%B01%2CType_%C3%A9nergie_n%C2%B02%2CType_%C3%A9nergie_n%C2%B03%2CIsolation_toiture_(0%2F1)%2CQualit%C3%A9_isolation_murs%2CQualit%C3%A9_isolation_plancher_bas%2CType_%C3%A9nergie_principale_chauffage%2CType_%C3%A9nergie_principale_ECS%2CType_ventilation"
+
+        variables = quote(",".join(list_variables))
+        url_api = f"{api_root}?offset={offset}&size={batch_size}&select={variables}"
 
         req = requests.get(url_api)
         wb = req.json()
@@ -19,7 +30,7 @@ def get_dpe(size=float('inf')):
         return df, len(wb["results"])
 
     while total_fetched < size:
-        df, count = get_dpe_batch(offset, batch_size)
+        df, count = get_dpe_batch(offset, batch_size, list_variables)
         total_fetched += count
         
         if df.empty:
