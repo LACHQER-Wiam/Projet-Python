@@ -2,6 +2,20 @@ import requests
 import pandas as pd
 from urllib.parse import quote
 
+
+def get_dpe_batch(offset, batch_size, list_variables):
+        api_root = "https://koumoul.com/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines"
+
+        variables = quote(",".join(list_variables))
+        url_api = f"{api_root}?offset={offset}&size={batch_size}&select={variables}"
+
+        req = requests.get(url_api)
+        wb = req.json()
+
+        df = pd.json_normalize(wb["results"])
+        return df, len(wb["results"])
+
+
 def get_dpe(var, size=float('inf')):
     """
     Function aims to generate a data Frame from the extraction of data from the Ademe API
@@ -16,18 +30,6 @@ def get_dpe(var, size=float('inf')):
     data_frames = []
     total_fetched = 0
     list_variables = var
-
-    def get_dpe_batch(offset, batch_size, list_variables):
-        api_root = "https://koumoul.com/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines"
-
-        variables = quote(",".join(list_variables))
-        url_api = f"{api_root}?offset={offset}&size={batch_size}&select={variables}"
-
-        req = requests.get(url_api)
-        wb = req.json()
-
-        df = pd.json_normalize(wb["results"])
-        return df, len(wb["results"])
 
     while total_fetched < size:
         df, count = get_dpe_batch(offset, batch_size, list_variables)
