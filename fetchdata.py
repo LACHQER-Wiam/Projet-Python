@@ -1,9 +1,14 @@
 import requests
 import pandas as pd
-from urllib.parse import quote
 
+def get_dpe(size=float('inf')):
 
-def get_dpe_batch(offset, batch_size, list_variables):
+    batch_size = 10000
+    offset = 0
+    data_frames = []
+    total_fetched = 0
+
+    def get_dpe_batch(offset, batch_size):
         api_root = "https://koumoul.com/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines"
 
         variables = quote(",".join(list_variables))
