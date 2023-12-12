@@ -1,24 +1,16 @@
 import requests
 import pandas as pd
+from urllib.parse import quote
 
-def get_dpe(size=float('inf')):
+def get_dpe_batch(offset, batch_size, list_variables):
+    variables = quote(",".join(list_variables))
+    url_api = f"{api_root}?offset={offset}&size={batch_size}&select={variables}"
 
-    batch_size = 10000
-    offset = 0
-    data_frames = []
-    total_fetched = 0
+    req = requests.get(url_api)
+    wb = req.json()
 
-    def get_dpe_batch(offset, batch_size):
-        api_root = "https://koumoul.com/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines"
-
-        variables = quote(",".join(list_variables))
-        url_api = f"{api_root}?offset={offset}&size={batch_size}&select={variables}"
-
-        req = requests.get(url_api)
-        wb = req.json()
-
-        df = pd.json_normalize(wb["results"])
-        return df, len(wb["results"])
+    df = pd.json_normalize(wb["results"])
+    return df, len(wb["results"])
 
 
 def get_dpe(var, size=float('inf')):
@@ -39,7 +31,7 @@ def get_dpe(var, size=float('inf')):
     while total_fetched < size:
         df, count = get_dpe_batch(offset, batch_size, list_variables)
         total_fetched += count
-        
+
         if df.empty:
             break
 
@@ -51,3 +43,4 @@ def get_dpe(var, size=float('inf')):
     full_data = pd.concat(data_frames, ignore_index=True)
 
     return full_data
+
