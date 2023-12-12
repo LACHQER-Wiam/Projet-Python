@@ -3,11 +3,14 @@ import seaborn as sns
 from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import LabelEncoder
 from sklearn.impute import SimpleImputer
+import matplotlib.pyplot as plt
+
 
 def correlation(df):
     corr = df.corr()
     corr.style.background_gradient(cmap='coolwarm')
     return corr
+
 
 def linreg_marg_dist(df,x,y):
     sns.set_theme(style="darkgrid")
@@ -42,6 +45,7 @@ def remove_outliers(data, contamination=0.01):
     inliers_mask = outliers == 1
     cleaned_data = data[inliers_mask]
     return cleaned_data
+
 
 #def lineplot(data, colonnes):
      
