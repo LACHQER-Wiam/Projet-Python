@@ -4,6 +4,7 @@ from urllib.parse import quote
 
 def get_dpe_batch(offset, batch_size, list_variables):
     variables = quote(",".join(list_variables))
+    api_root = "https://koumoul.com/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines"
     url_api = f"{api_root}?offset={offset}&size={batch_size}&select={variables}"
 
     req = requests.get(url_api)

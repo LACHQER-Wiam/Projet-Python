@@ -4,6 +4,7 @@ from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import LabelEncoder
 from sklearn.impute import SimpleImputer
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
 
 
 def correlation(df):
@@ -50,13 +51,13 @@ def remove_outliers(data, contamination=0.01):
 #def lineplot(data, colonnes):
      
 def boxplot(data, variables):
-    fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(15, 8))
+    fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(15, 8))
     axes = axes.flatten()
     for i in range(len(variables)):
         sns.boxplot(x=data[variables[i]], ax=axes[i], color='skyblue')
         #axes[i].set_title(variables[i])
     # Masquer le subplot vide 
-    if len(axes) > 5:
+    if len(axes) > 9:
         for i in range(5, len(axes)):
             fig.delaxes(axes[i])
     plt.tight_layout()
@@ -66,7 +67,7 @@ def boxplot(data, variables):
 
 #Fonction qui permet d’explorer les données
 def create_unique(df):       
-    df_unique = pd.DataFrame(columns=['Column_name','Data_type', 'Number_of_unique','Number_of_missing', 'Unique_values'])
+    df_unique = pd.DataFrame(columns=['Column_name','Data_type', 'Number_of_unique','Number_of_missing', 'Unique_values',"Rate_of_missing"])
     for col in df.columns:
         num_unique = df[col].nunique()
         if num_unique <= 15:
@@ -75,6 +76,30 @@ def create_unique(df):
             unique_vals = "More than 15 unique values"
         data_type = df[col].dtype
         num_missing = df[col].isnull().sum()
+        rate_missing = num_missing/len(df)
         df_unique = pd.concat([df_unique,pd.DataFrame([{'Column_name': col, 'Number_of_unique': num_unique, 'Unique_values': unique_vals, 'Data_type':
-                                      data_type, 'Number_of_missing': num_missing}])])
+                                      data_type, "Rate_of_missing":rate_missing, 'Number_of_missing': num_missing}])])
     return df_unique
+
+def Outliers(df, columns):
+    outliers = pd.DataFrame(columns=['liste_val_aberrantes','nombre_val_aberrantes'])
+    for column in columns:
+        q1 = df[column].quantile(0.25)
+        q3 = df[column].quantile(0.75)
+        iqr = q3 - q1
+        seuil_inf = q1 - 1.5 * iqr
+        seuil_sup = q3 + 1.5 * iqr
+        valeurs_aberrantes = df[(df[column] < seuil_inf) | (df[column] > seuil_sup)]
+        outliers = pd.concat([outliers,pd.DataFrame([{'variable':column,'nombre_val_aberrantes':len(valeurs_aberrantes)}])] )
+    return outliers
+
+# Standardisation
+def standardisation (df, columns):
+    scaler = StandardScaler()
+    data_standardized = pd.DataFrame()
+    data_standardized[columns]= scaler.fit_transform(df[columns])
+    return data_standardized
+
+def occurrence(df,column):
+    occurrence = df[coumn].value_counts()
+    return occurrence
