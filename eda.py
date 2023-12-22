@@ -23,7 +23,7 @@ def linreg_marg_dist(df,x,y):
 
 
 def one_hot_encode(data, columns_to_encode):
-    return pd.get_dummies(data, columns=columns_to_encode)
+    return pd.get_dummies(data, columns=columns_to_encode, drop_first=True)
 
 
 def label_encode(data, columns_to_encode):
@@ -82,7 +82,7 @@ def create_unique(df):
     return df_unique
 
 def Outliers(df, columns):
-    outliers = pd.DataFrame(columns=['liste_val_aberrantes','nombre_val_aberrantes'])
+    outliers = pd.DataFrame(columns=['variable','nombre_val_aberrantes'])
     for column in columns:
         q1 = df[column].quantile(0.25)
         q3 = df[column].quantile(0.75)
@@ -101,5 +101,5 @@ def standardisation (df, columns):
     return data_standardized
 
 def occurrence(df,column):
-    occurrence = df[coumn].value_counts()
+    occurrence = df[column].value_counts()
     return occurrence
