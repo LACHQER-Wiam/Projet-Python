@@ -51,7 +51,7 @@ def remove_outliers(data, contamination=0.01):
 #def lineplot(data, colonnes):
      
 def boxplot(data, variables):
-    fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(15, 8))
+    fig, axes = plt.subplots(nrows=4, ncols=3, figsize=(15, 8))
     axes = axes.flatten()
     for i in range(len(variables)):
         sns.boxplot(x=data[variables[i]], ax=axes[i], color='skyblue')
