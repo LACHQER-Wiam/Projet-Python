@@ -2,44 +2,40 @@ import requests
 import pandas as pd
 from urllib.parse import quote
 
-def get_dpe_batch(offset, batch_size, list_variables, after):
-    variables = quote(",".join(list_variables))
-    api_root = "https://koumoul.com/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines"
-    url_api = f"{api_root}?offset={offset}&size={batch_size}&select={variables}&after={after}"
 
-    print(url_api)
-
-    req = requests.get(url_api)
-    wb = req.json()
-
-    df = pd.json_normalize(wb["results"])
-    return df, len(wb["results"])
+batch_size = 10000
+after = 1 
+api_root = "https://koumoul.com/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines"
 
 
-def get_dpe(var, size):
+def get_dpe_batch(url):
+    response = requests.get(url)
+    return response
 
-    batch_size = 10000
-    offset = 0
-    data_frames = []
+
+def get_dpe(var, size=float('inf')):
+
+    variables = quote(",".join(var))
+    
+    url_api = f"{api_root}?after={after}&size={batch_size}&select={variables}"
+
+    results = []
     total_fetched = 0
-    list_variables = var
-    after = 3334
 
-    while total_fetched < size:
-        df, count = get_dpe_batch(offset, batch_size, list_variables,after)
-        total_fetched += count
+    while url_api and total_fetched < size:
+        response = get_dpe_batch(url_api)
 
-        if df.empty:
+        if response.status_code == 200:
+            data = response.json()
+            results.extend(data['results'])
+            url_api = data.get('next')
+            total_fetched = len(results)
+
+        else:
+            print("Failed to fetch data")
             break
 
-        data_frames.append(df)
-        offset += batch_size
-        after = after*2
-
         print(f"Fetched {total_fetched} observations")
-        print(offset)
 
-    full_data = pd.concat(data_frames, ignore_index=True)
-
-    return full_data
+    return pd.json_normalize(results)
 
