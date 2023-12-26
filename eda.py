@@ -58,7 +58,7 @@ def boxplot(data, variables):
         #axes[i].set_title(variables[i])
     # Masquer le subplot vide 
     if len(axes) > 9:
-        for i in range(5, len(axes)):
+        for i in range(9, len(axes)):
             fig.delaxes(axes[i])
     plt.tight_layout()
     plt.show()
