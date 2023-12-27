@@ -93,6 +93,16 @@ def Outliers(df, columns):
         outliers = pd.concat([outliers,pd.DataFrame([{'variable':column,'nombre_val_aberrantes':len(valeurs_aberrantes)}])] )
     return outliers
 
+def supprimer_outliers(df,columns):
+    for column in columns:
+        q1 = df[column].quantile(0.25)
+        q3 = df[column].quantile(0.75)
+        iqr = q3 - q1
+        seuil_inf = q1 - 1.5 * iqr
+        seuil_sup = q3 + 1.5 * iqr
+        df = df.drop(df[(df[column] < seuil_inf) | (df[column] > seuil_sup)].index)
+    return (df)
+
 # Standardisation
 def standardisation (df, columns):
     scaler = StandardScaler()
