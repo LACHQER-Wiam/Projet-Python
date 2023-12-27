@@ -100,8 +100,8 @@ def supprimer_outliers(df,columns):
         iqr = q3 - q1
         seuil_inf = q1 - 1.5 * iqr
         seuil_sup = q3 + 1.5 * iqr
-        df = df.drop(df[(df[column] < seuil_inf) | (df[column] > seuil_sup)].index)
-    return (df)
+        g = df.drop(df[(df[column] < seuil_inf) | (df[column] > seuil_sup)].index)
+    return (g)
 
 # Standardisation
 def standardisation (df, columns):
