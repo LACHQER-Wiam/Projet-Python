@@ -87,21 +87,23 @@ def Outliers(df, columns):
         q1 = df[column].quantile(0.25)
         q3 = df[column].quantile(0.75)
         iqr = q3 - q1
-        seuil_inf = q1 - 1.5 * iqr
-        seuil_sup = q3 + 1.5 * iqr
+        seuil_inf = q1 - 3.5 * iqr
+        seuil_sup = q3 + 3.5 * iqr
         valeurs_aberrantes = df[(df[column] < seuil_inf) | (df[column] > seuil_sup)]
         outliers = pd.concat([outliers,pd.DataFrame([{'variable':column,'nombre_val_aberrantes':len(valeurs_aberrantes)}])] )
     return outliers
 
-def supprimer_outliers(df,columns):
+def remplacer_outliers(df,columns):
     for column in columns:
         q1 = df[column].quantile(0.25)
         q3 = df[column].quantile(0.75)
         iqr = q3 - q1
-        seuil_inf = q1 - 1.5 * iqr
-        seuil_sup = q3 + 1.5 * iqr
-        g = df.drop(df[(df[column] < seuil_inf) | (df[column] > seuil_sup)].index)
-    return (g)
+        if iqr>0:
+            seuil_inf = q1 - 3.5 * iqr
+            seuil_sup = q3 + 3.5 * iqr
+            df.loc[df[column] < seuil_inf, column] = seuil_inf
+            df.loc[df[column] > seuil_sup, column] = seuil_sup
+    return (df)
 
 # Standardisation
 def standardisation (df, columns):
