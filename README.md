@@ -13,7 +13,7 @@ Ce projet Python a été créé dans le but de fournir des visualisations varié
 
 2. **Simulateur de DPE :** Un simulateur de DPE a été développé en utilisant les données de l'ADEME. Ce simulateur permet d'estimer la performance énergétique d'un logement en fonction de divers paramètres.
   
-3. **WebApp :** La web app utilise streamlit. Pour la lancer, exécuter dans le terminal :
+3. **WebApp :** La web app utilise streamlit. Pour la lancer, exécutez dans le terminal :
    ```python
    streamlit run Home.py
    
