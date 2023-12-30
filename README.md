@@ -13,7 +13,10 @@ Ce projet Python a été créé dans le but de fournir des visualisations varié
 
 2. **Simulateur de DPE :** Un simulateur de DPE a été développé en utilisant les données de l'ADEME. Ce simulateur permet d'estimer la performance énergétique d'un logement en fonction de divers paramètres.
   
-3. **WebApp :** La web app utilise streamlit. Pour la lancer, exécuter `streamlit run Home.py` dans le terminal.
+3. **WebApp :** La web app utilise streamlit. Pour la lancer, exécuter dans le terminal :
+   ```python
+   streamlit run Home.py
+   
 
 Ce dépôt contient plusieurs dossiers et fichiers : 
 - le fichier `data.ipynb` contient le code principal. 
@@ -22,6 +25,9 @@ Ce dépôt contient plusieurs dossiers et fichiers :
     * `eda.py` : fonctions pour l'analyse et la manipulation de données.
     * `fetchdata.py` : fonctions pour l'importation des données.
 - `Home.py`, `pages/01_Data.py`, `pages/02_Geo-analysis.py` et `pages/03_Modeling.py` sont les fichiers pour l'application web streamlit
+- Le fichier `requirements.txt` contient la liste des dépendances Python nécessaires pour exécuter ce projet. Assurez-vous d'installer ces dépendances avant de lancer le projet.
+  ```bash
+  pip install -r requirements.txt
 
 ### Source des données : https://www.data.gouv.fr/fr/datasets/dpe-logements-existants-depuis-juillet-2021/
 
