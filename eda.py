@@ -23,6 +23,15 @@ def linreg_marg_dist(df,x,y):
 
 
 def one_hot_encode(data, columns_to_encode):
+    """
+    Cette fonction encode des variables spécifiques.
+
+    args : 
+        => df (pd.Dataframe) : base de données
+        => columns_to_encode (list) : liste des variables à encoder
+    return : 
+        => df(pd.Dataframe) : la base de données initiale avec des colonnes supplémentaires
+    """
     return pd.get_dummies(data, columns=columns_to_encode, drop_first=True)
 
 
@@ -218,7 +227,7 @@ def clean_na (df) :
 def create_energy_plots(dataframe, x_variable, y_variable):
     ''' fonction permettant de creer plusieurs graphiques pour la description d'une variable'''
     sns.set(style="whitegrid")
-    fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+    fig, axes = plt.subplots(2, 2, figsize=(10, 9))
 
     # Graphique 1: Histogramme avec estimation de la densité
     sns.histplot(dataframe[x_variable], kde=True, color='skyblue', ax=axes[0, 0])
