@@ -6,7 +6,7 @@ import plotly.express as px
 
 from Home import DPE_data, DPE_data_brt, chosen_variables
 import fetchdata 
-import explodata
+import eda
 
 st.subheader('Data import and first manipulations')
 st.markdown('#### Mise en place de la base de données exploitable.\n L\'objectif est de selectionner et de modifier certaines variables afin qu\'elles puissent etre utilisées efficacement dans nos analyses.')
@@ -28,7 +28,7 @@ st.write('L\'enjeux à présent et de manipuler les données, observer et rectif
 st.write('Pour ce faire, nous utilisons dans un premier temps une fonction que nous avons developpé afin d\'effectuer un audit rapides des variables de notres base')
 st.write( 'Voici un audit rapide des données afin de mettre en évidence les problème de données de notre base : ')
 
-tab_recap_NA = explodata.create_unique(DPE_data_brt) 
+tab_recap_NA = eda.create_unique(DPE_data_brt) 
 st.dataframe(tab_recap_NA)
 
 #-------------------------------------------------------------------------------------------------------

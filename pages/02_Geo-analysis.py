@@ -208,6 +208,7 @@ if st.button("Afficher une carte régionale selon vos préferences ! "):
     st.pyplot(carte_region(gdf, region_choix))
 
 #====================================================================================================================
+
 Noms_regions = pd.read_csv("DATA/anciennes-nouvelles-regions.csv", delimiter=';')
 Noms_regions['Nouveau Code'] = Noms_regions['Nouveau Code'].astype(str)
 DPE_data = DPE_data.merge(Noms_regions, left_on = 'N°_région_(BAN)', right_on= 'Nouveau Code').drop('Nouveau Code',  axis=1)

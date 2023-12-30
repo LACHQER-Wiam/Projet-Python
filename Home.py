@@ -1,6 +1,6 @@
 import streamlit as st
 import fetchdata
-import explodata
+import eda
 import pandas as pd
 import folium
 from streamlit_folium import folium_static
@@ -78,7 +78,7 @@ DPE_data=DPE_data[DPE_data["Type_bâtiment"]!="immeuble"]
 DPE_data = pd.get_dummies(DPE_data, columns=['Type_bâtiment'])
 
 # NETTOYAGE GENERALE ( valeurs manquantes)
-DPE_data = explodata.clean_na(DPE_data)
+DPE_data = eda.clean_na(DPE_data)
 DPE_data = DPE_data.dropna() # on termine par suprimmer les lignes avec des valeusr manquantes 
 
 
