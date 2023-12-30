@@ -3,3 +3,17 @@ scikit-learn
 pandas
 matplotlib
 seaborn
+geopandas
+plotly
+contextily
+folium
+mapclassify
+py7zr
+openpyxl
+tqdm
+s3fs
+PyYAML
+xlrd
+cartiflette @ git+https://github.com/inseefrlab/cartiflette@80b8a5a28371feb6df31d55bcc2617948a5f9b1a
+streamlit
+streamlit_folium

@@ -5,6 +5,9 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.impute import SimpleImputer
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
+import plotly.graph_objects as go
+import plotly.express as px
+import plotly.offline as pyo #permet d'afficher les graphes interactives direct dans le notebook 
 
 
 def correlation(df):
@@ -114,14 +117,6 @@ def occurrence(df,column):
     return occurrence
 
 ################################################### GRAPHIQUES / 
-import pandas as pd 
-from sklearn.preprocessing import LabelEncoder
-import seaborn as sns
-import matplotlib.pyplot as plt
-import plotly.graph_objects as go
-import plotly.express as px
-import plotly.offline as pyo #permet d'afficher les graphes interactives direct dans le notebook 
-
 
 
 def create_unique(df):
@@ -141,33 +136,31 @@ def create_unique(df):
                             ...\n
                             Varn        ---             ---             ---                 ---                 ---\n
     """
-        
-    df_unique = pd.DataFrame(columns=['Column_name','Data_type', 'Number_of_unique','Number_of_missing', 'Percentage_of_missing', 'Unique_values'])
+    df_unique_list = []
 
-    # loop through the columns in the other dataframe
     for col in df.columns:
-        # get the number of unique values in the column
         num_unique = df[col].nunique()
 
-        # add the unique values as a list to the 'Unique_values' column if num_unique <= 5
         if num_unique <= 15:
             unique_vals = list(df[col].unique())
         else:
             unique_vals = "More than 15 unique values"
 
-        # get the data type of the column
         data_type = df[col].dtype
-
-        # count the number of missing values in the column
         num_missing = df[col].isnull().sum()
-
-        # we calculate the percentage of missing value in each varaible
         percent_missing = num_missing / df.shape[0]
 
-        # append a row to the empty dataframe with the column name, number of unique values, unique values, and data type
-        df_unique = pd.concat([df_unique,pd.DataFrame([{'Column_name': col, 'Number_of_unique': num_unique, 'Unique_values': unique_vals, 'Data_type':
-                                      data_type, 'Number_of_missing': num_missing , 'Percentage_of_missing' : percent_missing}])], ignore_index= True)
-    
+        df_unique_list.append({
+            'Column_name': col,
+            'Data_type': data_type,
+            'Number_of_unique': num_unique,
+            'Number_of_missing': num_missing,
+            'Percentage_of_missing': percent_missing,
+            'Unique_values': unique_vals
+        })
+
+    df_unique = pd.DataFrame(df_unique_list)
+
     return df_unique
 
 
