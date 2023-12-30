@@ -8,7 +8,7 @@ from Home import DPE_data, DPE_data_brt, chosen_variables
 import fetchdata 
 import eda
 
-st.subheader('Data import and first manipulations')
+st.subheader('Import de données et premières manipulations')
 st.markdown('#### Mise en place de la base de données exploitable.\n L\'objectif est de selectionner et de modifier certaines variables afin qu\'elles puissent etre utilisées efficacement dans nos analyses.')
 st.write("**Pour avoir une description d'une variable vous pouvez la sélectionner dans la liste déroulante :** ")
 selected_option = st.selectbox("Liste des varibles", chosen_variables)
@@ -19,10 +19,10 @@ st.write(f"Vous avez sélectionné *{selected_option}*, \n",
 # Importataion des données 
 
 # Affichage du tableau brut
-st.write("We have made a tool that allows us to extract the data from the database in a fast and modular way from the Ademe API in Open Access. this allows us to choose the number of observations and the variables")
+st.write("Nous avons réalisé un outil qui permet d'extraire les données de la base de données de manière rapide et modulaire depuis l'API de l'Ademe en Open Access. cela nous permet de choisir le nombre d'observations et les variables")
 st.write("**Voici un premier aperçu des données 'brutes' à notre dispostion :**")
 nb_obs, nb_col = DPE_data_brt.shape
-st.dataframe(DPE_data_brt.head(50)) 
+st.dataframe(DPE_data_brt.head(5)) 
 st.caption(f'Données relatives au dépenses énergétiques des logements en France. Nombre d\'observation : **{nb_obs}** et nombre de variables : **{nb_col}**.')
 st.write('L\'enjeux à présent et de manipuler les données, observer et rectifier les erreurs, supprimer les variables incomplete ou inutilisables.')
 st.write('Pour ce faire, nous utilisons dans un premier temps une fonction que nous avons developpé afin d\'effectuer un audit rapides des variables de notres base')
@@ -33,7 +33,7 @@ st.dataframe(tab_recap_NA)
 
 #-------------------------------------------------------------------------------------------------------
 st.write('###### Pre-traitement des données :') 
-st.dataframe(DPE_data)
+st.dataframe(DPE_data.head(5))
 nb_obs, nb_col = DPE_data.shape
 st.caption(f'Nombre d\'obsrevations : **{nb_obs}** et nombre de colonnes : **{nb_col}**')
 
@@ -117,15 +117,15 @@ def barplot_chauffage_inter(bd_dpe):
 
 tab1_chauffage, tab2_chauffage = st.tabs(["📈 Pieplot", "📊 Barplot"]) # POUR ENERGIE CHUAFFAGE
 
-tab1_chauffage.subheader("A tab about heating energy (Pieplot) ")
+tab1_chauffage.subheader("Un onglet sur l'énergie de chauffage (Pieplot)")
 tab1_chauffage.plotly_chart(pieplot_chauffage_interact(DPE_data)[0])
-tab2_chauffage.subheader("A tab about heating energy (Barplot)")
+tab2_chauffage.subheader("Un onglet sur l'énergie de chauffage (Barplot)")
 tab2_chauffage.plotly_chart(barplot_chauffage_inter(DPE_data)[0])
 
 
 tab1_ECS, tab2_ECS = st.tabs(["📊 Barplot","📈 Pieplot"]) # POUR ENERGIE ECS
 
-tab1_ECS.subheader("A tab about ECS energy (Barplot)")
+tab1_ECS.subheader("Un onglet sur l'énergie ECS (Barplot)")
 tab1_ECS.plotly_chart(barplot_chauffage_inter(DPE_data)[1])
-tab2_ECS.subheader("A tab about ECS energy (Pieplot)")
+tab2_ECS.subheader("Un onglet sur l'énergie ECS (Pieplot)")
 tab2_ECS.plotly_chart(pieplot_chauffage_interact(DPE_data)[1])

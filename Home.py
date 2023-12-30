@@ -60,10 +60,10 @@ chosen_variables=['N°DPE',
 
 
 # Affichage du tableau brut : 
-DPE_data_brt = fetchdata.get_dpe(chosen_variables, size =10000)
+DPE_data_brt = fetchdata.get_dpe(chosen_variables, size =50000)
 
 # Creation du tableau nettoyé : 
-DPE_data = fetchdata.get_dpe(chosen_variables, size = 10000)
+DPE_data = fetchdata.get_dpe(chosen_variables, size = 50000)
 #-------------------------------------------------------------------------------------------------------
 # Suppression des lignes dans lesquelles la surface habitable est non renseignée
 DPE_data=DPE_data[DPE_data["Surface_habitable_logement"].notna()]

@@ -13,11 +13,9 @@ from Home import DPE_data
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 
-st.header('**Graphic and cartographic representation of data**')
+st.header('**Représentation graphique et cartographique des données**')
 
-st.write("""
-In this section, we will explore the data from a geographical perspective. We will generate multiple maps at different scales to highlight various variables of interest.
-""")
+st.write("Dans cette section, nous explorerons les données d’un point de vue géographique. Nous générerons plusieurs cartes à différentes échelles pour mettre en évidence diverses variables d'intérêt.")
 
 # Conversion du dataframe en géodataframe pour l'ensmeble des represenation cartographique + supression val abérantes : 
 def create_gdf(DPE_data):
