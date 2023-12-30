@@ -57,8 +57,8 @@ def remove_outliers(data, contamination=0.01):
     return cleaned_data
 
 
-#def lineplot(data, colonnes):
-     
+
+# Tracer les boites à moustache de plusieurs variables
 def boxplot(data, variables):
     fig, axes = plt.subplots(nrows=4, ncols=3, figsize=(15, 8))
     axes = axes.flatten()
@@ -73,23 +73,7 @@ def boxplot(data, variables):
     plt.show()
 
 
-
-#Fonction qui permet d’explorer les données
-def create_unique(df):       
-    df_unique = pd.DataFrame(columns=['Column_name','Data_type', 'Number_of_unique','Number_of_missing', 'Unique_values',"Rate_of_missing"])
-    for col in df.columns:
-        num_unique = df[col].nunique()
-        if num_unique <= 15:
-            unique_vals = list(df[col].unique())
-        else:
-            unique_vals = "More than 15 unique values"
-        data_type = df[col].dtype
-        num_missing = df[col].isnull().sum()
-        rate_missing = num_missing/len(df)
-        df_unique = pd.concat([df_unique,pd.DataFrame([{'Column_name': col, 'Number_of_unique': num_unique, 'Unique_values': unique_vals, 'Data_type':
-                                      data_type, "Rate_of_missing":rate_missing, 'Number_of_missing': num_missing}])])
-    return df_unique
-
+# Détecter des outliers
 def Outliers(df, columns):
     outliers = pd.DataFrame(columns=['variable','nombre_val_aberrantes'])
     for column in columns:
@@ -102,6 +86,8 @@ def Outliers(df, columns):
         outliers = pd.concat([outliers,pd.DataFrame([{'variable':column,'nombre_val_aberrantes':len(valeurs_aberrantes)}])] )
     return outliers
 
+
+
 def remplacer_outliers(df,columns):
     for column in columns:
         q1 = df[column].quantile(0.25)
@@ -113,6 +99,8 @@ def remplacer_outliers(df,columns):
             df.loc[df[column] < seuil_inf, column] = seuil_inf
             df.loc[df[column] > seuil_sup, column] = seuil_sup
     return (df)
+
+
 
 # Standardisation
 def standardisation (df, columns):
@@ -224,6 +212,8 @@ def clean_na (df) :
 
 
 
+
+
 def create_energy_plots(dataframe, x_variable, y_variable):
     ''' fonction permettant de creer plusieurs graphiques pour la description d'une variable'''
     sns.set(style="whitegrid")
@@ -247,6 +237,9 @@ def create_energy_plots(dataframe, x_variable, y_variable):
 
     plt.tight_layout()
     plt.show()
+
+
+
 
 
 def pieplot_chauffage_interact(bd_dpe):
@@ -291,6 +284,8 @@ def pieplot_chauffage_interact(bd_dpe):
     fig_ECS.show()
 
 
+
+
 def pieplot_chauffage(bd_dpe):
     """ Cette fonction permet de tracer un digramme ciruclaire interactif des types d'energies : 
         - pour le chauffage
@@ -330,6 +325,9 @@ def pieplot_chauffage(bd_dpe):
     axes[1].set_title('Répartition types d\'énergies pour ECS des logements')
 
     plt.show()
+
+
+
 
 def barplot_chauffage(bd_dpe): 
     """
